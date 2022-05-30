@@ -1,0 +1,10 @@
+logistic regression
+number of train data = 23547 -> 253440
+- svd128, iter=10 :: train_acc: 0.04895, val_acc: 0.04702
+
+neural network (weighted graph svd, batchnorm)
+
+- svd128, hidden = 512 :: best val acc: 11.557084607543324 (neptune 4)
+- svd256, hidden = 512 :: best val acc: 12.054026503567789 (neptune 7)
+- svd256, hidden = 1024 :: best val acc: 12.10499490316004 (neptune 8)
+- svd512, hidden = 512 :: best val acc: 12.627420998980632 (neptune 9)
