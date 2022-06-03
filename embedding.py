@@ -6,7 +6,7 @@ import csv
 import argparse
 from sklearn.decomposition import  TruncatedSVD
 
-from utils import load_data, load_embedding_1
+from utils import load_data
 
 
 NUM_ING = 6714
@@ -28,10 +28,10 @@ def make_embedding(trains, embedding_size):
     A = nx.adjacency_matrix(G)
     svd = TruncatedSVD(n_components=embedding_size)
     X = svd.fit_transform(A)
-    
+
     return X
-    
-    
+
+
 def load_embedding_1(filename, hiddensize):
     f = open(filename, 'r', encoding='utf-8')
     reader = csv.reader(f)
@@ -54,7 +54,7 @@ def load_embedding(filename):
     lines = []
     for line in reader:
         lines.append(line)
-    
+
     embedding_size = len(lines[0])
     embedding = np.zeros((NUM_ING, embedding_size))
     for i, line in enumerate(lines):
@@ -66,14 +66,14 @@ def save_embedding(filename, embedding):
     if not os.path.exists('embeddings'):
         os.makedirs('embeddings')
     path = os.path.join('embeddings', filename)
-    np.savetxt(path, embedding, delimiter=',') 
-    
+    np.savetxt(path, embedding, delimiter=',')
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--length", type=int, required=True, help="length of embedding")
     args = parser.parse_args()
-    
+
     trains, val_cls_q, val_cls_a, val_cpt_q, val_cpt_a, test_cls_q, test_cpt_q = load_data('data/')
     embedding = make_embedding(trains, args.length)
     print(embedding.shape)
