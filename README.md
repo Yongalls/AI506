@@ -7,5 +7,5 @@ python embedding.py --length=512
 
 ### Run completion task
 ``` 
-python completion.py embedding_mlp --embedding svd512
+python3 completion.py embedding_mlp --embedding=Word2vec128 --inputsize=128 --hiddensize=512 --filename=completion_answer
 ``` 
