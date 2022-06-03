@@ -15,6 +15,7 @@ parser.add_argument("algorithm", help="Name of algorithm")
 parser.add_argument("--embedding", default='none', help="Name of embedding")
 parser.add_argument("--filename", default='result', help="filename")
 parser.add_argument("--batchsize", default=256, type=int, help="batchsize")
+parser.add_argument("--inputsize", default=64, type=int, help="input size")
 parser.add_argument("--hiddensize", default=512, type=int, help="hidden size")
 parser.add_argument("--epochs", default=150, type=int, help="epochs")
 parser.add_argument("--lr", default=1e-3, type=float, help="learning rate")
@@ -30,11 +31,11 @@ trains, val_cls_q, val_cls_a, val_cpt_q, val_cpt_a, test_cls_q, test_cpt_q = loa
 
 if args.embedding == 'onehot':
     embedding = np.identity(NUM_ING)
+elif 'LSTM' in args.embedding:
+    embedding = load_embedding_2('Embedding/' + args.embedding + '.csv', args.inputsize)
 elif args.embedding != 'none':
-    embedding = load_embedding('embeddings/' + args.embedding + '.csv')
-
-# embp1q10 = load_embedding_1('Embedding/Embp1q10.csv', 64)
-# embp1q100 = load_embedding_1('Embedding/Embp1q2.csv', 64)
+#     embedding = load_embedding('embeddings/' + args.embedding + '.csv')
+    embedding = load_embedding_1('Embedding/' + args.embedding + '.csv', args.inputsize)
 
 
 if args.algorithm == 'logistic_regression':
@@ -58,4 +59,4 @@ if not os.path.exists(savepath):
     os.makedirs(savepath)
 
 np.savetxt(os.path.join(savepath, 'val_' + args.filename + '.csv'), val_predict.astype(int), fmt='%s', delimiter=",")
-# np.savetxt(os.path.join(savepath, 'test_' + args.filename + '.csv'), test_predict.astype(int), fmt='%s', delimiter=",")
+np.savetxt(os.path.join(savepath, 'test_' + args.filename + '.csv'), test_predict.astype(int), fmt='%s', delimiter=",")
